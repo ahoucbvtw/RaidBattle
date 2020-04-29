@@ -1,69 +1,129 @@
-import tkinter as tk
+from tkinter import *
 import tkinter.font as tkfont
 import PIL.Image
 import PIL.ImageTk
+import sys, os
 
-window = tk.Tk()
 
-#建立主視窗
-class MainWindow(object):
-	def __init__(self, master):
-		self.window = master
-		self.window.title('RaidBattle V1.0') #視窗名稱
-		self.window.config(background='#f0f0f0')#更該視窗背景顏色
-		self.window.geometry("590x570+300+50") #視窗解析度 (x*y+視窗欲固定的畫面位置X+視窗欲固定的畫面位置Y)
-		self.window.resizable(0,0)#不可以更改大⼩
+#建立按鈕實體物件
+class button(object):
+	def __init__(self, ButtonName, x, y, placewindow, goSub):
+		self.ButtonName = ButtonName
+		self.x = x
+		self.y = y
+		self.placewindow = placewindow
+		self.goSub = goSub
+
+		Font = tkfont.Font(family='新細明體', size=10, weight="bold")
+		BN = Button(self.placewindow,text = self.ButtonName,font=Font)
+		BN.config(bg= "skyblue")
+		BN.config(width = 10,height = 1)
+		BN.config(command = self.gotoSub)
+		BN.place(x = self.x, y = self.y)
 
 	def gotoSub(self):
-			self.goSub = goSub
+		# print(self.ButtonName)
+		self.goSub(self.ButtonName)
 
-	#建立按鈕實體物件
-	class Button(object):
-		def __init__(self, ButtonName, height, width, x, y):
-			self.ButtonName = ButtonName
-			self.height = height
-			self.width = width
-			self.x = x
-			self.y = y
 
-			Font = tkfont.Font(family='新細明體', size=10, weight="bold")
-			BN = tk.Button(window,text = self.ButtonName,font=Font)
-			BN.config(bg= "skyblue")
-			BN.config(width = self.width,height = self.height)
-			# BN.config(command = self.gotoSub)
-			BN.place(x = self.x, y = self.y)
+class Main(object):
+
+# #建立按鈕實體物件(不知道為什麼抓取的ButtonName一直是最後創件的Button名字)
+
+# 	def button(self, Name, place_x, place_y):
+# 		self.ButtonName = Name
+# 		self.x = place_x
+# 		self.y = place_y
+
+# 		Font = tkfont.Font(family='新細明體', size=10, weight="bold")
+# 		BN = Button(self.window ,text = self.ButtonName,font=Font)
+# 		BN.config(bg = "skyblue", activebackground = "#21b2ed")
+# 		BN.config(activeforeground = "#f7f9fa")
+# 		BN.config(width = 10,height = 1)
+# 		BN.config(command = self.gotoSub)
+# 		BN.place(x = self.x, y = self.y)
+
+# 	def gotoSub(self):
+# 		print(self.ButtonName)
+# 		# self.goSub(self, MapName = self.ButtonName)
+
+
+#建立主視窗
+	def __init__(self, goSub):
+
+		def resource_path(relative_path):
+		#Get absolute path to resource, works for dev and for PyInstaller
+			try:
+		# PyInstaller creates a temp folder and stores path in _MEIPASS
+				base_path = sys._MEIPASS
+			except Exception:
+				base_path = os.path.abspath(".")
+			return os.path.join(base_path, relative_path)
+
+		icon = resource_path("icon.ico")
+		self.window = goSub
+		self.window = Tk()
+		self.window.iconbitmap(icon)
+		self.window.title("RaidBattle") #視窗名稱
+		self.window.config(background="#f0f0f0")#更該視窗背景顏色
+		self.window.geometry("590x580+500+180") #視窗解析度 (x*y+視窗欲固定的畫面位置X+視窗欲固定的畫面位置Y)
+		self.window.resizable(0,0)#不可以更改大⼩
 
 
 
 #建立主視窗下的頁面
-class Main(object):
-	def __init__(self):
-		image = PIL.Image.open("hole.png")
+
+		hole = resource_path("hole.png")
+		image = PIL.Image.open(hole)
 		photo = PIL.ImageTk.PhotoImage(image)
 
-		label = tk.Label(window, image=photo)
+		label = Label(self.window, image=photo)
 		label.image = photo  # keep a reference!
 		label.place(x = 15, y = 0)
 
-		a = MainWindow.Button("絢麗草原",1,10,165,537)
-		b = MainWindow.Button("沐光森林",1,10,72,522)
-		c = MainWindow.Button("牙牙湖之眼",1,10,6,462)
-		d = MainWindow.Button("牙牙湖東岸",1,10,8,418)
-		e = MainWindow.Button("瞭望塔舊址",1,10,40,386)
-		f = MainWindow.Button("牙牙湖西岸",1,10,55,358)
-		g = MainWindow.Button("沙塵窪地",1,10,167,150)
-		h = MainWindow.Button("巨人帽岩",1,10,140,124)
-		i = MainWindow.Button("逆鱗湖",1,10,155,25)
-		j = MainWindow.Button("拳關丘陵",1,10,435,28)
-		k = MainWindow.Button("巨人鏡池",1,10,486,73)
-		l = MainWindow.Button("巨石原野",1,10,440,185)
-		m = MainWindow.Button("橋間空地",1,10,400,256)
-		n = MainWindow.Button("機擎河岸",1,10,373,322)
-		o = MainWindow.Button("美納斯湖北岸",1,10,435,382)
-		p = MainWindow.Button("巨人凳岩",1,10,437,420)
-		q = MainWindow.Button("美納斯湖南岸",1,10,386,520)
 
-MainWindow(window)
-Main()
+		a = button("絢麗草原",165,537,self.window,goSub)
+		b = button("沐光森林",72,522,self.window,goSub)
+		c = button("牙牙湖之眼",6,462,self.window,goSub)
+		d = button("牙牙湖東岸",8,418,self.window,goSub)
+		e = button("瞭望塔舊址",40,386,self.window,goSub)
+		f = button("牙牙湖西岸",55,358,self.window,goSub)
+		g = button("沙塵窪地",167,150,self.window,goSub)
+		h = button("巨人帽岩",140,124,self.window,goSub)
+		i = button("逆鱗湖",155,25,self.window,goSub)
+		j = button("拳關丘陵",435,28,self.window,goSub)
+		k = button("巨人鏡池",486,73,self.window,goSub)
+		l = button("巨石原野",440,185,self.window,goSub)
+		m = button("橋間空地",400,256,self.window,goSub)
+		n = button("機擎河岸",373,322,self.window,goSub)
+		o = button("美納斯湖北岸",435,382,self.window,goSub)
+		p = button("巨人凳岩",437,420,self.window,goSub)
+		q = button("美納斯湖南岸",386,520,self.window,goSub)
 
-window.mainloop() #確立視窗一直長在
+		# a = self.button("絢麗草原",165,537)
+		# b = self.button("沐光森林",72,522)
+		# c = self.button("牙牙湖之眼",6,462)
+		# d = self.button("牙牙湖東岸",8,418)
+		# e = self.button("瞭望塔舊址",40,386)
+		# f = self.button("牙牙湖西岸",55,358)
+		# g = self.button("沙塵窪地",167,150)
+		# h = self.button("巨人帽岩",140,124)
+		# i = self.button("逆鱗湖",155,25)
+		# j = self.button("拳關丘陵",435,28)
+		# k = self.button("巨人鏡池",486,73)
+		# l = self.button("巨石原野",440,185)
+		# m = self.button("橋間空地",400,256)
+		# n = self.button("機擎河岸",373,322)
+		# o = self.button("美納斯湖北岸",435,382)
+		# p = self.button("巨人凳岩",437,420)
+		# q = self.button("美納斯湖南岸",386,520)
+
+		self.window.mainloop()
+
+
+
+if __name__ == '__main__':
+
+	window = Tk()
+	Main()
+	window.mainloop() #確立視窗一直長在
