@@ -21,6 +21,5 @@ class Application(Main, Sub):
 		Sub.__init__(self, goMain = self.goMain, MapName = self.MapName)
 
 
-
 if __name__ == '__main__':
 	Application()
