@@ -123,7 +123,5 @@ class Main(object):
 
 
 if __name__ == '__main__':
-
-	window = Tk()
 	Main()
-	window.mainloop() #確立視窗一直長在
+

@@ -164,13 +164,7 @@ class Sub(object):
 		monlist.config(height = 12, width = 41, font = FontMon, exportselection = False, borderwidth = 3, selectmode = "single",bg= "#b5e1f3")
 		monlist.place(x = 290, y = 318)
 
-
-
 		self.window.mainloop()
 
-
 if __name__ == '__main__':
-
-	window = Tk()
 	Sub()
-	window.mainloop() 
