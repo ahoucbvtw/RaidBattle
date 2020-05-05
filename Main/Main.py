@@ -120,8 +120,6 @@ class Main(object):
 
 		self.window.mainloop()
 
-
-
 if __name__ == '__main__':
 	Main()
 
